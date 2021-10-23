@@ -1,0 +1,28 @@
+
+<h1>
+    <%= @user.first_name %>
+    <%= @user.last_name %>'s Playlist
+
+</h1>
+<div>
+    <table>
+        <tr>
+            <th> Artist </th>
+            <th> Title </th>
+            <th> Times Added </th>
+        </tr>
+    <% @user.songs.each do |song| %>
+        <tr>
+            <td> <%= song.artist %></td>
+            <td> <a href= "/songs/<%=song.id%>"> <%= song.title %></a></td>
+
+            <td>
+                <%= song.users.where(first_name: @user.first_name.to_s ).count %>
+            </td>
+        </tr>
+    <% end %>
+
+    </table>
+</div>
+
+<a href='/sessions/destroy'> Logout </a>

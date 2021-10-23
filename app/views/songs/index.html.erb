@@ -1,0 +1,40 @@
+Hello, <%= @user.first_name %> <%= @user.last_name %>!
+
+All the songs in our hub:
+
+<div>
+    <table>
+        <tr>
+            <th> Artist </th>
+            <th> Title </th>
+            <th> Times Added </th>
+            <th> Add to Playlist </th>
+        </tr>
+        <% @songs.reverse.each do |song| %>
+            <tr>
+                <td> <%= song.artist %></td>
+                <td> <a href= "/songs/<%=song.id%>"> <%= song.title %> </a></td>
+                <td> <%= song.users.count %> </td>
+                <td> 
+                    <form action="/songs/<%=song.id%>/add" method="post">
+                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                        <input type="submit" value="ADD">
+                    </form>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+    
+</div>
+<div>
+        Add a song: 
+        <form action="/songs/create" method="POST">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+            <input type='text' name='song[title]' placeholder="Title">
+            <input type="text" name="song[artist]" placeholder="Artist">
+        <input type='submit' value="Add Song">
+</form>
+</div>
+
+<a href='/sessions/destroy'> Logout </a>
